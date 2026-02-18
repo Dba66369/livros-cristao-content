@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graça Perfeita - Acesso Exclusivo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .error {
+            color: #e74c3c;
+            display: none;
+            margin-top: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .message {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔐 Graça Perfeita</h1>
+        <p class="subtitle">Acesso Exclusivo - Estudo sobre Fé Prática</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="code">Código de Acesso:</label>
+                <input type="password" id="code" name="code" required placeholder="Digite o código recebido">
+            </div>
+            
+            <button type="submit">Entrar</button>
+            
+            <p id="error" class="error"></p>
+        </form>
+        
+        <p class="message">Insira o código que recebeu para acessar o conteúdo especial e a indicação do livro de Henry Otasowere.</p>
+    </div>
+
+    <script>
+        const ACCESS_CODE = "GRACA2026";
+        const AMAZON_LINK = "https://www.amazon.com.br/dp/SEU_ID?tag=seu-id-afiliado";
+
+        document.getElementById("login-form").addEventListener("submit", function(e){
+            e.preventDefault();
+            const code = document.getElementById("code").value.trim();
+            
+            if (code === ACCESS_CODE) {
+                localStorage.setItem("graca_perfeit_acesso", "true");
+                window.location.href = AMAZON_LINK;
+            } else {
+                const err = document.getElementById("error");
+                err.style.display = "block";
+                err.textContent = "Código inválido. Tente novamente.";
+            }
+        });
+    </script>
+</body>
+</html>
