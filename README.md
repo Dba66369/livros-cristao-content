@@ -5,7 +5,7 @@
 
 ## 📥 DADOS DE ENTRADA
 
-**TEMA:** A Fé que Move Montanhas
+**TEMA:** Oque é um Altar
 
 **LINK AMAZON:** https://amzn.to/exemplo123
 
