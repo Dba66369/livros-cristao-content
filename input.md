@@ -1,15 +1,13 @@
-# Tema da Leitura Profética
+# ENTRADA DE DADOS - LEITURA PROFÉTICA
 
-## INSTRUÇÕES:
-1. Escreva o tema/versículo que deseja explorar
-2. Salve este arquivo
-3. O GitHub Actions irá automaticamente gerar:
-   - Um artigo para o blog
-   - Um post para Facebook
-   - Uma curiosidade bíblica
-4. O arquivo output.json será gerado e pronto para Make.com
+[TEMA]: A Providência Divina: Do Altar de Abraão à Graça de Paulo
+[LINK AMAZON]: https://amzn.to/4aIbnpC
 
-## SEU TEMA AQUI:
+[ORIENTAÇÕES DO HENRY OTASOWERE]:
+- Conectar obrigatoriamente a teologia de Abraão, Elias, Jacó e Paulo.
+- Foco em vendas para o link da Amazon acima.
+- Incluir o convite para a igreja: Rua Diogo Brandão 63, Porto, PT.
+- Aviso legal: "Como Associado Amazon, recebo comissão pelas compras qualificadas efetuadas através deste link."
 
-A Fidelidade de Abraão em meio às promessas divinas - Como a fé inabalável de Abraão nos ensina sobre confiar em Deus quando as circunstâncias são adversário. Conectar com Elias, Jacó e Paulo e sua jornada de fé.
+
 
