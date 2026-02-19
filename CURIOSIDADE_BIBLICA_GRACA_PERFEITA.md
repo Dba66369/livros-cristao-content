@@ -1,67 +1,22 @@
-# Curiosidade Bíblica #1 - Graça Perfeita
-## "Deus mede a fé... em passos, não só em palavras"
+# COMANDO MESTRE: PROJETO LEITURA PROFÉTICA
+# AUTOR: Henry Otasowere
 
----
+[TEMA E LINK]
+- TEMA SEMANAL: [OQUE É UM ALTAR]
+- LINK AMAZON: [https://amzn.to/4aIbnpC]
 
-### 📖 A Descoberta
+[FORMATO 1: BLOG (Profundo e Estruturado)]
+- Estudo teológico completo ligando Abraão, Elias, Jacó e Paulo.
+- Convite para a igreja local: Rua Diogo Brandão 63, Porto.
 
-Você sabia que, na Bíblia, **a fé raramente aparece parada**?
+[FORMATO 2: PÁGINA GRAÇA PERFEITA (Descontraído)]
+- Foco em comunidade e aplicação prática para o dia a dia.
+- Frase de impacto para a foto + legenda acolhedora.
 
-Quase sempre ela vem acompanhada de um passo concreto:
-- Sair do lugar
-- Obedecer
-- Esperar 
-- Renunciar
+[FORMATO 3: LEITURA PROFÉTICA/BIBLIOTECA (Curiosidade)]
+- Criar um "gancho" ou curiosidade bíblica que só é revelada lendo o livro ou o blog.
+- Objetivo: Clique no link da Amazon.
 
-> **"Porque andamos por fé e não pelo que vemos."** *(2 Coríntios 5:7)*
-
----
-
-### 💡 Por Que Isso Importa?
-
-Repara que o texto não diz:
-- ❌ "falamos por fé"
-- ❌ "pensamos em fé"
-- ❌ "sentimos a fé"
-
-Mas sim: ✅ **"andamos por fé"**
-
-Isso mostra que a **verdadeira fé mexe com:**
-- Sua agenda diária
-- Suas escolhas
-- Seus relacionamentos
-- Cada decisão que você toma
-
----
-
-### 🎯 A Conexão com Henry Otasowere
-
-Esse é exatamente o tipo de fé prática que o autorista **Henry Otasowere** enfatiza em seus escritos:
-
-**Não apenas acreditar em Deus**
-
-Mas **viver de forma que cada decisão revele em quem você realmente confia**.
-
----
-
-### 🤔 Desafio de Hoje
-
-**Qual será o seu próximo passo concreto de fé?**
-
-Não apenas algo que você *sente* ou *pensa*, mas algo que você **faz**.
-
----
-
-### 📚 Quer se Aprofundar?
-
-Se quiser explorar mais sobre como viver uma vida de fé no cotidiano, preparei uma indicação especial.
-
-**Clique no link da bio** para acessar conteúdo exclusivo e descobrir como a fé prática pode transformar suas relacionamentos cristãos.
-
----
-
-### 📋 Próxima Curiosidade
-
-Na próxima semana: *"Por que Abraão é chamado de 'pai da fé' se ele duvidou tanto?"*
-
-**Nos siga para não perder! 🙏**
+[NOTAS OBRIGATÓRIAS EM TODOS OS POSTS]
+- "Como Associado Amazon, recebo comissão pelas compras qualificadas efetuadas através deste link. Esta parceria ajuda a manter o projeto Leitura Profética."
+- Endereço da igreja local no Porto.
