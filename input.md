@@ -19,3 +19,6 @@
 # Modelo revertido para gemini-pro com biblioteca atualizada
 
 # ULTIMA TENTATIVA: Usando caminho completo models/gemini-1.5-flash
+
+
+# SOLUCAO DEFINITIVA: transport=rest para forcar v1 API - aplicada com sucesso
