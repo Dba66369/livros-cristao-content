@@ -1,154 +1,120 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+GERADOR AUTÓMTICO DE CONTEÚDO PROFÙTICO
+Leitura Profética - Minimalista (sem complexidade)
+"""
+
+import google.generativeai as genai
 import os
 import json
-import google.generativeai as genai
 from datetime import datetime
 
-# Configuracao da API
-genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+# CONFIGURAÇÃO MINIMALISTA - SEM COMPLICAÇÕES
+API_KEY = os.environ.get('GEMINI_API_KEY')
+if not API_KEY:
+    print("❌ GEMINI_API_KEY não encontrada")
+    exit(1)
 
-# Force a versao estavel da API para evitar o erro 404 do v1beta
-# Use o modelo flash, que e o mais rapido e estavel para automacoes
-model = genai.GenerativeModel(
-model_name='gemini-pro',
+# Configurar API - SEM transport, SEM client_options
+genai.configure(api_key=API_KEY)
+
+# Criar modelo - SIMPLES E DIRETO
+model = genai.GenerativeModel('gemini-1.5-flash')
+
+# PERSONA INJETADA NO PROMPT
+PERSONA = """Você é o Profeta Henry Otasowere, escritor cristão português.
+Sua escrita é profética, profunda e transformadora.
+Conecta a antiguidade bíbblica com a realidade contemporânea."""
+
+# ELEMENTOS OBRIGATÓRIOS
+ENDERECO = "Rua Diogo Brandão 63, Porto, PT"
+AVISO_AMAZON = "⚠️ Como Associado da Amazon, recebo comissão pelas compras qualificadas."
+
+def generate_content():
+    """Gera conteúdo minimalista - SEM erros de API"""
     
-        "temperature": 0.7,
-        "top_p": 0.95,
-        "top_k": 64,
-        "max_output_tokens": 8192,
-    }
-)
-# Configuracoes fixas
-AUTOR = "Henry Otasowere"
-TONO = "Profetico, profundo, profissional"
-CONEXAO_TEOLOGICA = "Abraao, Elias, Jaco e Paulo"
-CHAMADA_ACAO = "Visitar a igreja local na Rua Diogo Brandao 63, Porto, PT"
-DISCLAIMER_AMAZON = "Como Associado Amazon, recebo comissao pelas compras qualificadas efetuadas atraves deste link."
+    # LEITURA DO INPUT
+    input_file = 'input.md'
+    if not os.path.exists(input_file):
+        print(f"❌ {input_file} não encontrado")
+        return False
+    
+    with open(input_file, 'r', encoding='utf-8') as f:
+        input_content = f.read()
+    
+    # PROMPT SIMPLES E DIRETO
+    prompt = f"""{PERSONA}
 
-def ler_input():
-    """Le o arquivo input.md"""
+Baseado neste conteúdo:
+{input_content}
+
+Gere um JSON com estes campos EXATAMENTE:
+{{
+    "post_blog_html": "POST HTML PARA BLOG (5 parágrafos com <p> tags)",
+    "post_facebook": "POST RÁPIDO PARA FACEBOOK (150 caracteres)",
+    "curiosidade_biblica": "CURIOSIDADE BÍBLICA (2 parágrafos sobre o tema)"
+}}
+
+Inclua OBRIGATORIAMENTE:
+- Endereço: {ENDERECO}
+- Aviso: {AVISO_AMAZON}
+
+Responda APENAS com o JSON, nada mais."""
+
     try:
-        with open('input.md', 'r', encoding='utf-8') as f:
-            return f.read()
-    except FileNotFoundError:
-        print("[ERRO] Arquivo input.md nao encontrado!")
-        return ""
+        print("🤖 Gerando conteúdo...")
+        response = model.generate_content(prompt)
+        
+        # EXTRAIR JSON DO RESPONSE
+        json_text = response.text.strip()
+        if json_text.startswith('```'):
+            json_text = json_text.split('```')[1]
+            if json_text.startswith('json'):
+                json_text = json_text[4:]
+            json_text = json_text.strip()
+        
+        content_data = json.loads(json_text)
+        
+        # CRIAR MARKDOWN FINAL
+        markdown_content = f"""# 📅 CONTEÚDO GERADO - {datetime.now().strftime('%d/%m/%Y às %H:%M')}
 
-def gerar_texto_blog(tema):
-    """Gera texto para o blog em HTML"""
-    prompt = f"""Voce e um teologo profetico chamado {AUTOR}.
-    
-Gere um artigo profundo e profetico sobre: {tema}
-REQUISITOS OBRIGATORIOS:
-1. Tom: {TONO}
-2. Conectar teologicamente com: {CONEXAO_TEOLOGICA}
-3. Incluir chamada para acao: {CHAMADA_ACAO}
-4. Formato: HTML bem estruturado
-5. Incluir disclaimer: {DISCLAIMER_AMAZON}
-Responda APENAS com o HTML, sem explicacoes."""
-    
-    response = model.generate_content(prompt)
-    return response.text
+---
 
-def gerar_post_facebook(tema):
-    """Gera post para Facebook"""
-    prompt = f"""Como {AUTOR}, crie um post provocador e envolvente para Facebook sobre: {tema}
-REQUISITOS:
-1. Maximo 280 caracteres
-2. Tom: {TONO}
-3. Mencao a {CONEXAO_TEOLOGICA}
-4. Include emoji apropriado
-5. Insira hashtags relevantes (#LeituraProfética #Teologia #Fe)
-Responda APENAS com o texto do post."""
-    
-    response = model.generate_content(prompt)
-    return response.text
+## 📱 POST FACEBOOK
 
-def gerar_curiosidade_biblica(tema):
-    """Gera curiosidade biblica"""
-    prompt = f"""Crie uma curiosidade biblica profunda sobre: {tema}
-REQUISITOS:
-1. Conectar com: {CONEXAO_TEOLOGICA}
-2. Incluir versículo bíblico relevante
-3. Formato: Texto simples, maximo 150 palavras
-4. Tom: {TONO}
-5. Incluir: {CHAMADA_ACAO}
-Responda APENAS com a curiosidade."""
-    
-    response = model.generate_content(prompt)
-    return response.text
+{content_data.get('post_facebook', 'N/A')}
 
-def salvar_output(blog, facebook, curiosidade):
-    """Salva o output em JSON e Markdown para Make.com"""
-    data = {
-        "timestamp": datetime.now().isoformat(),
-        "autor": AUTOR,
-        "blog": blog,
-        "facebook": facebook,
-        "curiosidade_biblica": curiosidade,
-        "status": "pronto_para_publicar"
-    }
-    
-    # Salvar JSON
-    with open('output.json', 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
-    
-    # Salvar Markdown (arquivo que a workflow espera)
-    markdown_content = f"""# Post Diario Gerado - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+---
 
-## Autor
-{AUTOR}
+## 📄 POST BLOG
 
-## Facebook Post
-```
-{facebook}
-```
+{content_data.get('post_blog_html', 'N/A')}
 
-## Blog
-{blog}
+---
 
-## Curiosidade Biblica
-{curiosidade}
+## 📚 CURIOSIDADE BÍBLICA
 
-## Status
-{data['status']}
+{content_data.get('curiosidade_biblica', 'N/A')}
+
+---
+
+**Endereço:** {ENDERECO}
+{AVISO_AMAZON}
 """
-    
-    with open('RESULTADO_POST_DIARIO.md', 'w', encoding='utf-8') as f:
-        f.write(markdown_content)
-    
-    print("[OK] Arquivo output.json gerado com sucesso!")
-    print("[OK] Arquivo RESULTADO_POST_DIARIO.md gerado com sucesso!")
-    return data
-
-def main():
-    print("[INICIANDO] Lendo input.md...")
-    tema = ler_input()
-    
-    if not tema:
-        print("[ERRO] Nenhum tema encontrado!")
-        return
-    
-    print(f"[LIDO] Tema recebido: {tema[:50]}...")
-    print("[PROCESSANDO] Gerando conteudo com IA...")
-    
-    try:
-        blog = gerar_texto_blog(tema)
-        print("[OK] Blog gerado")
         
-        facebook = gerar_post_facebook(tema)
-        print("[OK] Post Facebook gerado")
+        # SALVAR RESULTADO
+        with open('RESULTADO_POST_DIARIO.md', 'w', encoding='utf-8') as f:
+            f.write(markdown_content)
         
-        curiosidade = gerar_curiosidade_biblica(tema)
-        print("[OK] Curiosidade biblica gerada")
-        
-        output = salvar_output(blog, facebook, curiosidade)
-        print("\n[SUCESSO] Automacao concluida!")
-        print("[PRONTO] Arquivos prontos para serem enviados ao Make.com")
+        print("✅ Conteúdo gerado com sucesso!")
+        print("📁 Salvo em: RESULTADO_POST_DIARIO.md")
+        return True
         
     except Exception as e:
-        print(f"[ERRO] Erro ao gerar conteudo: {e}")
-        raise
+        print(f"❌ Erro ao gerar: {e}")
+        return False
 
 if __name__ == "__main__":
-    main()
+    success = generate_content()
+    exit(0 if success else 1)
