@@ -14,4 +14,6 @@
 
 # Dependencias atualizadas para melhor compatibilidade com Gemini API v1
 
+# SOLUCAO FINAL: Usando gemini-1.5-flash com generation_config
+
 # Modelo revertido para gemini-pro com biblioteca atualizada
