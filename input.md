@@ -17,3 +17,5 @@
 # SOLUCAO FINAL: Usando gemini-1.5-flash com generation_config
 
 # Modelo revertido para gemini-pro com biblioteca atualizada
+
+# ULTIMA TENTATIVA: Usando caminho completo models/gemini-1.5-flash
