@@ -18,7 +18,7 @@ if not API_KEY:
     sys.exit(1)
 
 # URL DIRETA DA API v1
-API_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key={API_KEY}"
+API_URL = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-pro:generateContent?key={API_KEY}"
 # PERSONA E ELEMENTOS OBRIGATÓRIOS
 PERSONA = """Você é o Profeta Henry Otasowere, escritor cristão português.
 Sua escrita é profética, profunda e transformadora.
