@@ -1,13 +1,11 @@
 # ENTRADA DE DADOS - LEITURA PROFÉTICA
 
-[TEMA]: A Providência Divina teste de validacao: Do Altar de Abraão à Graça de Paulo
-[LINK AMAZON]: https://amzn.to/4aIbnpC
+[TEMA]: A Restauração da Identidade: De Jacó a Israel e o Propósito de Paulo
+[LINK AMAZON]: https://amzn.to/4tFDApL
 
-[ORIENTAÇÕES DO HENRY OTASOWERE]:
-- Conectar obrigatoriamente a teologia de Abraão, Elias, Jacó e Paulo.
-- Foco em vendas para o link da Amazon acima.
-- Incluir o convite para a igreja: Rua Diogo Brandão 63, Porto, PT.
-- Aviso legal: "Como Associado Amazon, recebo comissão pelas compras qualificadas efetuadas através deste link."
-
-
-
+[DIRETRIZES DO HENRY OTASOWERE]:
+- Inicie conectando a luta de Jacó no Vau de Jaboque com a resiliência de Elias no deserto.
+- Explique como Abraão fundamentou a fé que permitiu a Paulo pregar aos gentios.
+- O texto deve ser profético e focado em como esta leitura ajuda na restauração pessoal.
+- Convite Obrigatório: Visite-nos na Rua Diogo Brandão 63, Porto, PT.
+- Rodapé Legal: "Como Associado Amazon, recebo comissão pelas compras qualificadas efetuadas através deste link."
