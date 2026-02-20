@@ -6,8 +6,18 @@ from datetime import datetime
 
 # Configuracao da API
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-model = genai.GenerativeModel('gemini-pro')
 
+# Force a versao estavel da API para evitar o erro 404 do v1beta
+# Use o modelo flash, que e o mais rapido e estavel para automacoes
+model = genai.GenerativeModel(
+    model_name='gemini-1.5-flash',
+    generation_config={
+        "temperature": 0.7,
+        "top_p": 0.95,
+        "top_k": 64,
+        "max_output_tokens": 8192,
+    }
+)
 # Configuracoes fixas
 AUTOR = "Henry Otasowere"
 TONO = "Profetico, profundo, profissional"
