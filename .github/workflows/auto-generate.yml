@@ -26,12 +26,31 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install google-generativeai
+          pip install requests
 
       - name: Generate Content
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python main.py
+          echo "✅ main.py execution completed"
+
+      - name: Verify output files
+        run: |
+          echo "🔍 Verificando arquivos de saída..."
+          if [ -f "RESULTADO_POST_DIARIO.md" ]; then
+            echo "✅ RESULTADO_POST_DIARIO.md encontrado"
+            echo "Tamanho: $(wc -c < RESULTADO_POST_DIARIO.md) bytes"
+          else
+            echo "❌ RESULTADO_POST_DIARIO.md NÃO encontrado!"
+            exit 1
+          fi
+          if [ -f "output.json" ]; then
+            echo "✅ output.json encontrado"
+            echo "Tamanho: $(wc -c < output.json) bytes"
+          else
+            echo "⚠️  output.json não encontrado (opcional)"
+          fi
 
       - name: Commit and push output
         run: |
@@ -45,17 +64,44 @@ jobs:
             git push
           fi
 
-      - name: Notificar Make.com
+      - name: Notificar Make.com (Webhook)
         if: success()
         env:
           MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
         run: |
+          if [ -z "$MAKE_WEBHOOK_URL" ]; then
+            echo "⚠️  MAKE_WEBHOOK_URL não configurado, pulando notificação"
+            exit 0
+          fi
+          
           if [ -f "RESULTADO_POST_DIARIO.md" ]; then
-            echo "Arquivo RESULTADO_POST_DIARIO.md encontrado, enviando webhook para Make.com..."
+            echo "📄 Enviando webhook para Make.com..."
             curl -X POST "$MAKE_WEBHOOK_URL" \
               -H "Content-Type: application/json" \
-              -d "{\"repository\": \"${GITHUB_REPOSITORY}\", \"ref\": \"${GITHUB_REF}\", \"commit\": \"${GITHUB_SHA}\", \"file\": \"RESULTADO_POST_DIARIO.md\"}"
+              -d @<(cat <<EOF
+{
+  "repository": "${GITHUB_REPOSITORY}",
+  "ref": "${GITHUB_REF}",
+  "commit": "${GITHUB_SHA}",
+  "file": "RESULTADO_POST_DIARIO.md",
+  "timestamp": "$(date -u +'%Y-%m-%dT%H:%M:%SZ')",
+  "status": "success"
+}
+EOF
+)
+            echo "
+✅ Webhook enviado com sucesso!"
           else
-            echo "ERRO: RESULTADO_POST_DIARIO.md não encontrado, não enviar webhook"
+            echo "❌ RESULTADO_POST_DIARIO.md não encontrado para envio ao Make.com"
             exit 1
           fi
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-content
+          path: |
+            RESULTADO_POST_DIARIO.md
+            output.json
+          retention-days: 30
