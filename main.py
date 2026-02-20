@@ -21,7 +21,6 @@ genai.configure(api_key=API_KEY)
 
 # Criar modelo - SIMPLES E DIRETO
 model = genai.GenerativeModel('gemini-1.5-flash')
-
 # PERSONA INJETADA NO PROMPT
 PERSONA = """Você é o Profeta Henry Otasowere, escritor cristão português.
 Sua escrita é profética, profunda e transformadora.
