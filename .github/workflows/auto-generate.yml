@@ -1,96 +1,38 @@
 name: Auto-Generate Content
 
 on:
-  push:
-    paths:
-      - 'input.md'
   workflow_dispatch:
+  schedule:
+    - cron: '0 8 * * *'
+
+permissions:
+  contents: write
+  actions: read
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
+    
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: |
-          pip install --upgrade pip
-          pip install google-generativeai
-          pip install requests
-
-      - name: Generate Content
+          python-version: '3.11'
+      
+      - name: Install Dependencies
+        run: pip install google-generativeai
+      
+      - name: Run Generator
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python main.py
+      
+      - name: Commit Result
         run: |
-          python main.py
-          echo "✅ main.py execution completed"
-
-      - name: Verify output files
-        run: |
-          echo "🔍 Verificando arquivos de saida..."
-          if [ -f "RESULTADO_POST_DIARIO.md" ]; then
-            echo "✅ RESULTADO_POST_DIARIO.md encontrado"
-            echo "Tamanho: $(wc -c < RESULTADO_POST_DIARIO.md) bytes"
-          else
-            echo "❌ RESULTADO_POST_DIARIO.md NAO encontrado!"
-            exit 1
-          fi
-          if [ -f "output.json" ]; then
-            echo "✅ output.json encontrado"
-            echo "Tamanho: $(wc -c < output.json) bytes"
-          else
-            echo "⚠️  output.json nao encontrado (opcional)"
-          fi
-
-      - name: Commit and push output
-        run: |
-          git config user.email "bot@github.com"
-          git config user.name "GitHub Content Bot"
-          if git diff --quiet; then
-            echo "No changes to commit"
-          else
-            git add .
-            git commit -m "🤖 Auto-generated content $(date '+%Y-%m-%d %H:%M')"
-            git push
-          fi
-
-      - name: Notificar Make.com
-        if: success()
-        env:
-          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
-        run: |
-          if [ -z "$MAKE_WEBHOOK_URL" ]; then
-            echo "⚠️  MAKE_WEBHOOK_URL nao configurado, pulando notificacao"
-            exit 0
-          fi
-          
-          if [ -f "RESULTADO_POST_DIARIO.md" ]; then
-            echo "📄 Enviando webhook para Make.com..."
-            PAYLOAD='{"repository": "'$GITHUB_REPOSITORY'", "ref": "'$GITHUB_REF'", "commit": "'$GITHUB_SHA'", "file": "RESULTADO_POST_DIARIO.md", "timestamp": "'$(date -u +'%Y-%m-%dT%H:%M:%SZ')'", "status": "success"}'
-            curl -X POST "$MAKE_WEBHOOK_URL" -H "Content-Type: application/json" -d "$PAYLOAD"
-            echo ""
-            echo "✅ Webhook enviado com sucesso!"
-          else
-            echo "❌ RESULTADO_POST_DIARIO.md nao encontrado para envio ao Make.com"
-            exit 1
-          fi
-
-      - name: Upload artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-content
-          path: |
-            RESULTADO_POST_DIARIO.md
-            output.json
-          retention-days: 30
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add RESULTADO_POST_DIARIO.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "📝 Auto-generated content" && git push)
