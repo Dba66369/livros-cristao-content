@@ -13,3 +13,5 @@
 <!-- Updated: gemini-1.5-flash model fix applied -->
 
 # Dependencias atualizadas para melhor compatibilidade com Gemini API v1
+
+# Modelo revertido para gemini-pro com biblioteca atualizada
