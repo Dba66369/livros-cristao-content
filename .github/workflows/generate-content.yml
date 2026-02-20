@@ -1,16 +1,19 @@
-name: Generate Content
+name: Generate Daily Content
+
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'README.md'
   schedule:
-    - cron: '0 8 * * *' # Roda todo dia às 8h UTC
-  workflow_dispatch: # Permite execução manual
+    - cron: '0 8 * * *'  # Daily at 8 AM UTC
+  workflow_dispatch:    # Allow manual trigger
+  push:
+    paths:
+      - 'input.md'
 
 jobs:
   generate:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
 
     steps:
       - name: Checkout repository
@@ -25,64 +28,24 @@ jobs:
         run: |
           pip install google-generativeai
 
-      - name: Extract theme and link from README
-        id: extract
-        run: |
-          TEMA=$(grep -oP '(?<=\*\*TEMA:\*\* ).*' README.md | head -1)
-          LINK=$(grep -oP '(?<=\*\*LINK AMAZON:\*\* ).*' README.md | head -1)
-          echo "tema=$TEMA" >> $GITHUB_OUTPUT
-          echo "link=$LINK" >> $GITHUB_OUTPUT
-
-      - name: Generate content with Gemini
+      - name: Run content generation
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
-          cat > generate.py << 'PYTHON_SCRIPT'
-          import google.generativeai as genai
-          import os
-          import json
-          import sys
-          
-          # Configurar API
-          genai.configure(api_key=os.environ['GEMINI_API_KEY'], transport='rest')
-          model = genai.GenerativeModel('gemini-1.5-flash')
-          
-          # Ler README completo
-          with open('README.md', 'r', encoding='utf-8') as f:
-              prompt = f.read()
-          
-          # Gerar conteúdo
-          try:
-              response = model.generate_content(
-                  prompt,
-                  generation_config={
-                      'temperature': 0.75,
-                      'max_output_tokens': 8192,
-                      'response_mime_type': 'application/json'
-                  }
-              )
-              
-              # Salvar resultado
-              with open('content-output.json', 'w', encoding='utf-8') as f:
-                  f.write(response.text)
-              
-              print("✅ Conteúdo gerado com sucesso!")
-              
-          except Exception as e:
-              print(f"❌ Erro: {e}")
-              sys.exit(1)
-          PYTHON_SCRIPT
-          python generate.py
+          python main.py
+          if [ $? -ne 0 ]; then
+            echo "Content generation failed"
+            exit 1
+          fi
 
-      - name: Upload generated content
-        uses: actions/upload-artifact@v4
-        with:
-          name: generated-content
-          path: content-output.json
-
-      - name: Commit and push if changed
+      - name: Commit and push generated content
         run: |
-          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
-          git add -A
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Conteúdo gerado automaticamente" && git push)
+          git add RESULTADO_POST_DIARIO.md
+          if ! git diff --quiet --cached; then
+            git commit -m "🤖 Daily content generated"
+            git push
+          else
+            echo "No changes to commit"
+          fi
