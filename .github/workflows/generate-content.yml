@@ -1,31 +1,30 @@
 name: Generate Content
-
 on:
   push:
     branches: [ main ]
     paths:
       - 'README.md'
   schedule:
-    - cron: '0 8 * * *'  # Roda todo dia às 8h UTC
-  workflow_dispatch:  # Permite execução manual
+    - cron: '0 8 * * *' # Roda todo dia às 8h UTC
+  workflow_dispatch: # Permite execução manual
 
 jobs:
   generate:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           pip install google-generativeai
-      
+
       - name: Extract theme and link from README
         id: extract
         run: |
@@ -33,7 +32,7 @@ jobs:
           LINK=$(grep -oP '(?<=\*\*LINK AMAZON:\*\* ).*' README.md | head -1)
           echo "tema=$TEMA" >> $GITHUB_OUTPUT
           echo "link=$LINK" >> $GITHUB_OUTPUT
-      
+
       - name: Generate content with Gemini
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -43,15 +42,15 @@ jobs:
           import os
           import json
           import sys
-
+          
           # Configurar API
- genai.configure(api_key=os.environ['GEMINI_API_KEY'], transport='rest')
+          genai.configure(api_key=os.environ['GEMINI_API_KEY'], transport='rest')
           model = genai.GenerativeModel('gemini-1.5-flash')
-
+          
           # Ler README completo
           with open('README.md', 'r', encoding='utf-8') as f:
               prompt = f.read()
-
+          
           # Gerar conteúdo
           try:
               response = model.generate_content(
@@ -73,15 +72,14 @@ jobs:
               print(f"❌ Erro: {e}")
               sys.exit(1)
           PYTHON_SCRIPT
-
           python generate.py
-      
+
       - name: Upload generated content
         uses: actions/upload-artifact@v4
         with:
           name: generated-content
           path: content-output.json
-      
+
       - name: Commit and push if changed
         run: |
           git config --global user.name 'GitHub Actions Bot'
