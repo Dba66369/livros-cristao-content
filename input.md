@@ -1,6 +1,6 @@
 # ENTRADA DE DADOS - TESTE COMPLETO
 
-[TEMA]: Ester honrou a Deus
+[TEMA]: A Unção que Quebra o Jugo: De Jacó a Israel.
 
 [DIRECTIVES]:
 - O tema deve explorar como a fé cristã relevante nos dias atuais
