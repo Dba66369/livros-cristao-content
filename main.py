@@ -6,7 +6,7 @@ from datetime import datetime
 
 # Configuracao da API
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-pro')
 
 # Configuracoes fixas
 AUTOR = "Henry Otasowere"
