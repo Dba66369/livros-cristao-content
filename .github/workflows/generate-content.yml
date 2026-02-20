@@ -45,7 +45,7 @@ jobs:
           import sys
 
           # Configurar API
-          genai.configure(api_key=os.environ['GEMINI_API_KEY'])
+          48(api_key=os.environ['GEMINI_API_KEY'], transport='rest')
           model = genai.GenerativeModel('gemini-1.5-flash')
 
           # Ler README completo
