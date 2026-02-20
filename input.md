@@ -1,6 +1,6 @@
 # ENTRADA DE DADOS - LEITURA PROFÉTICA
 
-[TEMA]: A Providência Divina: Do Altar de Abraão à Graça de Paulo
+[TEMA]: A Providência Divina teste de validacao: Do Altar de Abraão à Graça de Paulo
 [LINK AMAZON]: https://amzn.to/4aIbnpC
 
 [ORIENTAÇÕES DO HENRY OTASOWERE]:
