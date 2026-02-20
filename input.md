@@ -1,6 +1,6 @@
 # ENTRADA DE DADOS - TESTE COMPLETO
 
-[TEMA]: A Importancia da Fe Cristaa nos Tempos Modernos
+[TEMA]: Ester honrou a Deus
 
 [DIRECTIVES]:
 - O tema deve explorar como a fé cristã relevante nos dias atuais
@@ -12,13 +12,4 @@
 
 <!-- Updated: gemini-1.5-flash model fix applied -->
 
-# Dependencias atualizadas para melhor compatibilidade com Gemini API v1
 
-# SOLUCAO FINAL: Usando gemini-1.5-flash com generation_config
-
-# Modelo revertido para gemini-pro com biblioteca atualizada
-
-# ULTIMA TENTATIVA: Usando caminho completo models/gemini-1.5-flash
-
-
-# SOLUCAO DEFINITIVA: transport=rest para forcar v1 API - aplicada com sucesso
